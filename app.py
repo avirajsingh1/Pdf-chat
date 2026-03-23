@@ -10,7 +10,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_core.runnables import RunnablePassthrough
 from langchain_core.prompts import ChatPromptTemplate
 
 # Load env
@@ -18,7 +17,7 @@ load_dotenv()
 
 # Streamlit UI
 st.set_page_config(page_title="PDF Chat (Groq)", layout="wide")
-st.title("📄 Chat with your PDF (Groq + LLaMA3)")
+st.title("📄 Chat with your PDF (Groq + GPT-OSS-120B)")
 
 # Upload PDF
 uploaded_file = st.file_uploader("Upload your PDF", type="pdf")
@@ -27,7 +26,7 @@ retrieval_chain = None
 # Load API key
 groq_api_key = os.getenv("GROQ_API_KEY")
 
-# Force model
+# ✅ Force model (ONLY ONCE — correct)
 llm = ChatGroq(
     model="openai/gpt-oss-120b",
     temperature=0,
@@ -63,11 +62,11 @@ if uploaded_file:
 
     retriever = vectordb.as_retriever()
 
-    # LLM (Groq)
-    llm = ChatGroq(
-        model=model_choice,
-        api_key=os.getenv("GROQ_API_KEY")
-    )
+    # ❌ REMOVE THIS BLOCK (causing error)
+    # llm = ChatGroq(
+    #     model=model_choice,
+    #     api_key=os.getenv("GROQ_API_KEY")
+    # )
 
     # Prompt
     prompt = ChatPromptTemplate.from_template(
@@ -105,4 +104,3 @@ if query:
                 st.write(response.get("answer", "No answer returned"))
             except Exception as e:
                 st.error(f"LLM error: {e}")
-                st.info("Try a different model in the dropdown (e.g., groq-7b, llama3-16b, llama3-70b).")
