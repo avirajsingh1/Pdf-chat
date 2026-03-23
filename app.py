@@ -24,12 +24,14 @@ st.title("📄 Chat with your PDF (Groq + LLaMA3)")
 uploaded_file = st.file_uploader("Upload your PDF", type="pdf")
 retrieval_chain = None
 
-# Model selector (helps avoid deprecated or unavailable model errors)
-default_model = os.getenv("GROQ_MODEL", "groq-7b")
-model_choice = st.selectbox(
-    "Choose Groq model",
-    ["groq-7b", "llama3-16b", "llama3-70b","openai/gpt-oss-120b"],
-    index=["groq-7b", "llama3-16b", "llama3-70b"].index(default_model) if default_model in ["groq-7b", "llama3-16b", "llama3-70b"] else 0
+# Load API key
+groq_api_key = os.getenv("GROQ_API_KEY")
+
+# Force model
+llm = ChatGroq(
+    model="openai/gpt-oss-120b",
+    temperature=0,
+    groq_api_key=groq_api_key
 )
 
 if uploaded_file:
