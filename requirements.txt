@@ -4,7 +4,7 @@ langchain-core==0.1.42
 langchain-community==0.0.32
 langchain-groq
 langchain-text-splitters
-chromadb
+chromadb==0.4.24
 pypdf
 python-dotenv
 sentence-transformers
