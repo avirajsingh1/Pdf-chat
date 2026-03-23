@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 
 # LangChain imports
+from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_groq import ChatGroq
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
