@@ -26,7 +26,6 @@ retrieval_chain = None
 # Load API key
 groq_api_key = os.getenv("GROQ_API_KEY")
 
-# ✅ Force model (ONLY ONCE — correct)
 llm = ChatGroq(
     model="openai/gpt-oss-120b",
     temperature=0,
@@ -62,12 +61,7 @@ if uploaded_file:
 
     retriever = vectordb.as_retriever()
 
-    # ❌ REMOVE THIS BLOCK (causing error)
-    # llm = ChatGroq(
-    #     model=model_choice,
-    #     api_key=os.getenv("GROQ_API_KEY")
-    # )
-
+ 
     # Prompt
     prompt = ChatPromptTemplate.from_template(
         """
